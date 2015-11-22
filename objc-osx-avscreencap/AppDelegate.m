@@ -9,7 +9,7 @@
 #import "AppDelegate.h"
 #import <AVFoundation/AVFoundation.h>
 
-@interface AppDelegate ()
+@interface AppDelegate () <AVCaptureVideoDataOutputSampleBufferDelegate>
 
 @property (nonatomic) AVCaptureSession *captureSession;
 @property (nonatomic) AVCaptureScreenInput *captureScreenInput;
@@ -20,6 +20,8 @@
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification {
 	// Insert code here to initialize your application
+	NSError *error;
+	[self createCaptureSession:&error];
 }
 
 - (void)applicationWillTerminate:(NSNotification *)aNotification {
@@ -65,4 +67,7 @@
 	return YES;
 }
 
+- (void)captureOutput:(AVCaptureOutput *)captureOutput didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer fromConnection:(AVCaptureConnection *)connection {
+	
+}
 @end

@@ -8,20 +8,26 @@
 
 #import "AppDelegate.h"
 #import <AVFoundation/AVFoundation.h>
+#import "ScreenCapture.h"
 
 @interface AppDelegate () <AVCaptureVideoDataOutputSampleBufferDelegate>
 
 @property (nonatomic) AVCaptureSession *captureSession;
 @property (nonatomic) AVCaptureScreenInput *captureScreenInput;
 
+@property (nonatomic) ScreenCapture *cappy;
+
 @end
 
 @implementation AppDelegate
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification {
-	// Insert code here to initialize your application
-	NSError *error;
-	[self createCaptureSession:&error];
+	if (false) {
+		NSError *error;
+		[self createCaptureSession:&error];
+	} else {
+		self.cappy = [[ScreenCapture alloc] init];
+	}
 }
 
 - (void)applicationWillTerminate:(NSNotification *)aNotification {
@@ -29,7 +35,7 @@
 }
 
 - (void)captureSessionRuntimeErrorDidOccur:(NSNotification *)not {
-	NSLog(@"SDFDSF %@", not);
+	NSLog(@"Error %@", not);
 }
 
 - (BOOL)createCaptureSession:(NSError **)outError{

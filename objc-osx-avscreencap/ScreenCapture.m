@@ -14,6 +14,7 @@
 @interface ScreenCapture() <AVCaptureVideoDataOutputSampleBufferDelegate, AVCaptureAudioDataOutputSampleBufferDelegate>
 
 @property (nonatomic) AVCaptureSession *captureSession;
+@property (nonatomic) AVCaptureOutput *videoOutput;
 
 @end
 
@@ -21,66 +22,56 @@
 
 - (instancetype)init
 {
-	self = [super init];
-	if (self) {
-		self.captureSession = [[AVCaptureSession alloc] init];
-		
-        if (0) {
-            AVCaptureScreenInput *screenInput = [[AVCaptureScreenInput alloc] initWithDisplayID:CGMainDisplayID()];
-            
-            screenInput.minFrameDuration = CMTimeMake(1, 60);
-            
-            [self.captureSession addInput:screenInput];
-        }
-
-        if (1) {
-            AVCaptureDevice *videoDevice = [AVCaptureDevice devicesWithMediaType:AVMediaTypeVideo][0];
-            NSError *error;
-            AVCaptureDeviceInput *videoInput = [[AVCaptureDeviceInput alloc] initWithDevice:videoDevice error:&error];
-            [self.captureSession addInput:videoInput];
-
-        }
+    self = [super init];
+    if (self) {
+        self.captureSession = [[AVCaptureSession alloc] init];
+        
+        AVCaptureDevice *videoDevice = [AVCaptureDevice devicesWithMediaType:AVMediaTypeVideo][0];
+        NSError *error;
+        AVCaptureDeviceInput *videoInput = [[AVCaptureDeviceInput alloc] initWithDevice:videoDevice error:&error];
+        [self.captureSession addInput:videoInput];
         
         NSArray<AVCaptureDevice *> *devices = [AVCaptureDevice devicesWithMediaType:AVMediaTypeAudio];
         AVCaptureDevice *airpod = nil;
         
+        // Find an input device with "AirPod" in the name.
+        // You may need to change the search string
         for (AVCaptureDevice *device in devices) {
             if([device.localizedName containsString:@"AirPod"]) {
                 airpod = device;
                 break;
             }
         }
+        if (airpod == nil) {
+            // make sure your airpods are connected and change the above "AirPod" search string
+            // if necessary.
+            abort();
+        }
         
-        NSError *error;
         AVCaptureDeviceInput *audioInput = [[AVCaptureDeviceInput alloc] initWithDevice:airpod error:&error];
         [self.captureSession addInput:audioInput];
+        
         AVCaptureAudioDataOutput *audioOutput = [[AVCaptureAudioDataOutput alloc] init];
         [self.captureSession addOutput:audioOutput];
-
         
-		
-		AVCaptureVideoDataOutput *output = [[AVCaptureVideoDataOutput alloc] init];
-		[self.captureSession addOutput:output];
-		
-		// TODO: create a dedicated queue.
-		[output setSampleBufferDelegate:self queue:dispatch_get_main_queue()];
-		
-		[self.captureSession startRunning];
-	}
-	return self;
+        
+        AVCaptureVideoDataOutput *videoOutput = [[AVCaptureVideoDataOutput alloc] init];
+        [self.captureSession addOutput:videoOutput];
+        [videoOutput setSampleBufferDelegate:self queue:dispatch_get_main_queue()];
+        
+        self.videoOutput = videoOutput;
+        
+        [self.captureSession startRunning];
+    }
+    return self;
 }
 
 - (void)captureOutput:(AVCaptureOutput *)captureOutput didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer fromConnection:(AVCaptureConnection *)connection {
-	// sampleBuffer contains screen cap, for me it's yuv
-	NSLog(@"buffer %@", sampleBuffer);
+    
+    if (captureOutput == self.videoOutput) {
+        CMTime pts = CMSampleBufferGetPresentationTimeStamp(sampleBuffer);
+        CMTimeShow(pts);
+    }
 }
-
-/*
-	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(captureError:) name:AVCaptureSessionRuntimeErrorNotification object:self.captureSession];
- 
-	- (void)captureError:(NSNotification *)notification {
- NSLog(@"Error %@", notification);
-	}
- */
 
 @end

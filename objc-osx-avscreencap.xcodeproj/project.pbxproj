@@ -12,7 +12,6 @@
 		6CC3D5061C028201003CA233 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6CC3D5051C028201003CA233 /* ViewController.m */; };
 		6CC3D5081C028201003CA233 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6CC3D5071C028201003CA233 /* Assets.xcassets */; };
 		6CC3D50B1C028201003CA233 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6CC3D5091C028201003CA233 /* Main.storyboard */; };
-		6CEAF5191C2B73A20056DA3A /* ScreenCapture.m in Sources */ = {isa = PBXBuildFile; fileRef = 6CEAF5181C2B73A20056DA3A /* ScreenCapture.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -25,8 +24,6 @@
 		6CC3D5071C028201003CA233 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		6CC3D50A1C028201003CA233 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		6CC3D50C1C028201003CA233 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		6CEAF5171C2B73A20056DA3A /* ScreenCapture.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ScreenCapture.h; sourceTree = "<group>"; };
-		6CEAF5181C2B73A20056DA3A /* ScreenCapture.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ScreenCapture.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -67,8 +64,6 @@
 				6CC3D5091C028201003CA233 /* Main.storyboard */,
 				6CC3D50C1C028201003CA233 /* Info.plist */,
 				6CC3D5011C028201003CA233 /* Supporting Files */,
-				6CEAF5171C2B73A20056DA3A /* ScreenCapture.h */,
-				6CEAF5181C2B73A20056DA3A /* ScreenCapture.m */,
 			);
 			path = "objc-osx-avscreencap";
 			sourceTree = "<group>";
@@ -152,7 +147,6 @@
 			files = (
 				6CC3D5061C028201003CA233 /* ViewController.m in Sources */,
 				6CC3D5031C028201003CA233 /* main.m in Sources */,
-				6CEAF5191C2B73A20056DA3A /* ScreenCapture.m in Sources */,
 				6CC3D5001C028201003CA233 /* AppDelegate.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
